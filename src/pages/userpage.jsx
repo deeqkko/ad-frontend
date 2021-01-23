@@ -21,10 +21,6 @@ const UserPage = () => {
     const [tokens, setTokens] = useState({})
     const [users, setUsers] = useState([])
 
-    const handleNull = (objectArray) => {
-        return(
-            objectArray ? objectArray.map(object => object.propName) : "none"
-        )}
 
     useEffect(() => {
         const loggedTokensJSON = window.localStorage.getItem('tokens')

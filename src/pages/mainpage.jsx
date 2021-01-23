@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import LoginForm from '../components/LoginForm'
-import DomainForm from '../components/DomainForm'
-import Domains from '../components/Domains'
 import loginService from '../services/login'
 import domainService from '../services/domains'
 import authHeader from '../helpers/authHeader'
@@ -16,7 +14,7 @@ const MainPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [tokens, setTokens] = useState({})
-  const [domains, setDomains] = useState([])
+
   const [loggedIn, setloggedIn] = useState(false)
 
   const loginFormRef = useRef()
@@ -31,19 +29,6 @@ const MainPage = () => {
     }
 
   }, [ ])
-
-  useEffect(() => {
-    if (tokens.access) {
-      authHeader.setTokens(tokens)
-      domainService.getAll()
-        .then(domains => setDomains(domains))
-    }
-  }, [ tokens ])
-
-
-
-  
-
 
   const handleLogin = async (event) => {
     event.preventDefault() 
@@ -100,8 +85,14 @@ const MainPage = () => {
     </Container>
     {loggedIn && 
         <div>
-            <Link to="/domains">Domains</Link>
-            <Link to="/users">Users</Link>
+          <Container>
+            <Row>
+              <Col><Link to="/domains">Domains</Link></Col>
+              <Col><Link to="/users">Users</Link></Col>
+              <Col><Link to="/ou">Organizational Units</Link></Col>
+            </Row>
+          </Container>
+            
         </div>
     }
     
