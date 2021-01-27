@@ -10,11 +10,12 @@ import { Container, Row, Col, Jumbotron } from 'react-bootstrap'
 import Domains from '../components/Domains'
 import DomainForm from '../components/DomainForm'
 
-//Helpers
-import authHeader from '../helpers/authHeader'
+//Helperss
+import { assignTokens } from '../helpers/authHeader'
+
 
 //Services
-import domainService from '../services/domains'
+import { getDomains } from '../services/domains'
 
 const DomainPage = (props) => {
 
@@ -37,8 +38,8 @@ const DomainPage = (props) => {
     
       useEffect(() => {
         if (tokens.access) {
-          authHeader.setTokens(tokens)
-          domainService.getAll()
+          assignTokens(tokens)
+          getDomains()
             .then(domains => setDomains(domains))
         }
       }, [ tokens ])

@@ -1,12 +1,12 @@
 import React from 'react'
-import userService from '../services/users'
+import { deleteUser } from '../services/users'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 const Users = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        userService.deleteUser(props.id)
+        deleteUser(props.id)
     }
 
     return(

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ouServices from '../services/ous'
+import { createOu } from '../services/ous'
 import { Container, Form, Button } from 'react-bootstrap'
 
 const OuForm = () => {
@@ -18,7 +18,7 @@ const OuForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await ouServices.createOu(newOu)
+        const response = await createOu(newOu)
         console.log(response)
         setNewOu(newOuTemplate)
     }

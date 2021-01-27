@@ -11,10 +11,10 @@ import Ous from '../components/Ou'
 import OuForm from '../components/OuForm'
 
 //Helpers
-import authHeader from '../helpers/authHeader'
+import { assignTokens } from '../helpers/authHeader'
 
 //Services
-import ouService from '../services/ous'
+import { getOus } from '../services/ous'
 
 const OuPage = () => {
     const [loggedIn, setloggedIn] = useState(false)
@@ -33,8 +33,8 @@ const OuPage = () => {
 
       useEffect(() => {
         if (tokens.access) {
-          authHeader.setTokens(tokens)
-          ouService.getAll()
+          assignTokens(tokens)
+          getOus()
             .then(ous => setOus(ous))
         }
         console.log(ous)

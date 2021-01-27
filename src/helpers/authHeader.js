@@ -1,7 +1,7 @@
 let accessToken = null
 let refreshToken = null
 
-const setTokens = (tokens) => {
+export const assignTokens = (tokens) => {
     accessToken = {
             headers: { Authorization: `Bearer ${tokens.access}`}
         }
@@ -11,18 +11,17 @@ const setTokens = (tokens) => {
     }   
 }
 
-const removeTokens = () => {
+export const removeTokens = () => {
     accessToken = null 
     refreshToken = null
 }
 
-const getAccessToken = () => {
+export const getAccessToken = () => {
     console.log('From authHeader.js ',accessToken)
     return(accessToken)
 }
 
-const getRefreshToken = () => {
+export const getRefreshToken = () => {
     return refreshToken
 }
 
-export default { setTokens, getAccessToken, getRefreshToken, removeTokens }

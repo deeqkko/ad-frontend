@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import domainServices from '../services/domains'
+import { createDomain } from '../services/domains'
 import { Container, Form, Button } from 'react-bootstrap'
 
 const DomainForm = () => {
@@ -24,7 +24,7 @@ const DomainForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await domainServices.createDomain(newDomain)
+        const response = await createDomain(newDomain)
         console.log(response)
         setNewDomain(newDomainTemplate)
     }

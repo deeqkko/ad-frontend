@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import LoginForm from '../components/LoginForm'
-import loginService from '../services/login'
-import domainService from '../services/domains'
-import authHeader from '../helpers/authHeader'
-// import jwt_decode from 'jwt-decode'
+import { login } from '../services/login'
+import { assignTokens, removeTokens } from '../helpers/authHeader'
 
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import {Container, Row, Col}  from 'react-bootstrap'
@@ -33,9 +31,9 @@ const MainPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault() 
     try {
-      const usertokens = await loginService.login({ username, password })
+      const usertokens = await login({ username, password })
       console.log('From app.js ',usertokens)
-      authHeader.setTokens(usertokens)
+      assignTokens(usertokens)
       setTokens(usertokens)
       setUsername('')
       setPassword('')
@@ -55,7 +53,7 @@ const MainPage = () => {
     setloggedIn(false)
     window.localStorage.removeItem('tokens')
     loginFormRef.current.toggleVisible()
-    authHeader.removeTokens()
+    removeTokens()
   }
 
 
@@ -90,6 +88,7 @@ const MainPage = () => {
               <Col><Link to="/domains">Domains</Link></Col>
               <Col><Link to="/users">Users</Link></Col>
               <Col><Link to="/ou">Organizational Units</Link></Col>
+              <Col><Link to="/groups">Groups</Link></Col>
             </Row>
           </Container>
             

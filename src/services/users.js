@@ -1,30 +1,58 @@
 import axios from 'axios'
-import authHeader from '../helpers/authHeader'
-import handleResponse from '../helpers/handleResponse'
+import { getAccessToken } from '../helpers/authHeader'
 
 const baseUrl = 'http://localhost:8000/api/users/'
 
 let authorization = null
 
-const getAll = async () => {
-    authorization = authHeader.getAccessToken()
-    const response = await axios.get(baseUrl, authorization)
-    console.log(response)
-    const data = handleResponse.handleResponse(response)
-    return data
+export const getUsers = () => {
+    authorization = getAccessToken()
+    const request = axios.get(baseUrl, authorization)
+    return request.then(response => response.data)
 }
 
-const createUser = async newDomain => {
-    authorization = authHeader.getAccessToken()
-    const response = await axios.post(baseUrl, newDomain, authorization)
-    return response.data
+export const createUser = async newUser => {
+    authorization = getAccessToken()
+    console.log(newUser)
+    const userRequest = await axios.post(baseUrl, newUser, authorization)
+        .then(userResponse => {
+            if (newUser.groups) {
+            updateUserGroups(userResponse.data.id, newUser.groups)
+                    .then(groupResponse => console.log(groupResponse.errors))
+            }
+            return userResponse
+        })
+        .then(userResponse => {
+            if (newUser.organizational_unit) {
+                updateUserOu(userResponse.data.id, newUser.organizational_unit)
+                    .then(ouResponse => console.log(ouResponse.errors))
+            }
+        })
+    return await userRequest
 }
 
-const deleteUser = async id => {
-    authorization = authHeader.getAccessToken()
+export const deleteUser = async id => {
+    authorization = getAccessToken()
     const response = await axios.delete(`${baseUrl}${id}/`, authorization)
     console.log(response.data)
     return response.data
 }
 
-export default { getAll, createUser, deleteUser }
+export const updateUserGroups = async (id, groupId) => {
+    authorization = getAccessToken()
+    const data = { groups: groupId }
+    const response = await axios.post(`${baseUrl}${id}/add_to_group/`, data, authorization)
+    console.log(response.data)
+    return response.data
+}
+
+export const updateUserOu = async (id, ouId) => {
+    authorization = getAccessToken()
+    const data = { organizational_unit: ouId}
+    const response = await axios.post(`${baseUrl}${id}/add_to_ou/`, data, authorization)
+    console.log(response.data)
+    return response.data
+}
+
+
+

@@ -1,5 +1,5 @@
 import React from 'react'
-import ouService from '../services/ous'
+import { deleteOu } from '../services/ous'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 const Ous = (props) => {
@@ -8,7 +8,7 @@ const Ous = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        ouService.deleteOu(props.id)
+        deleteOu(props.id)
     }
 
     return(

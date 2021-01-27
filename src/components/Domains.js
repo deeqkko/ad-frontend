@@ -1,5 +1,5 @@
 import React from 'react'
-import domainService from '../services/domains'
+import { deleteDomain } from '../services/domains'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 const Domains = (props) => {
@@ -7,7 +7,7 @@ const Domains = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        domainService.deleteDomain(props.id)
+        deleteDomain(props.id)
     }
 
     return(
