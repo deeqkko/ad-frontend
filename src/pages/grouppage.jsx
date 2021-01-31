@@ -15,14 +15,16 @@ import GroupForm from '../components/GroupForm'
 import { assignTokens } from '../helpers/authHeader'
 
 //Services
-import { getGroups } from '../services/groups'
-import { getOus } from '../services/ous'
+import { get } from '../services/backendapi'
+
+//URL
+const groupUrl = process.env.REACT_APP_GROUP_URL
+
 
 const GroupPage = () => {
     const [loggedIn, setloggedIn] = useState(false)
     const [tokens, setTokens] = useState({})
     const [groups, setGroups] = useState([])
-    const [ous, setOus] = useState([])
 
 
     useEffect(() => {
@@ -38,11 +40,9 @@ const GroupPage = () => {
       useEffect(() => {
         if (tokens.access) {
           assignTokens(tokens)
-          getGroups()
+          get(groupUrl)
             .then(groups => setGroups(groups))
-          getOus().then(ous => setOus(ous))
-          console.log('Ou', ous)
-          console.log('Groups', groups)
+
         }
       }, [ tokens ])
     
@@ -73,12 +73,18 @@ const GroupPage = () => {
                                     group_scope={group.group_scope}
                                     display_name={group.display_name}
                                     description={group.description}
-                                    organizational_unit={group.organizational_unit}
+                                    organizational_unit={
+                                        group.organizational_unit
+                                        ? group.organizational_unit.name
+                                        : 'None'}
+                                    url={groupUrl}
                                     />
                             )}
                     </Col>
                     <Col>
-                        {loggedIn && <GroupForm ous={ous}/>}
+                        {loggedIn && <GroupForm tokens={tokens}
+                                                url={groupUrl}
+                        />}
                     </Col>
                 </Row>
             </Container>

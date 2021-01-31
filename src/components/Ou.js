@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteOu } from '../services/ous'
+import { destroy } from '../services/backendapi'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 const Ous = (props) => {
@@ -8,7 +8,7 @@ const Ous = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        deleteOu(props.id)
+        destroy(props.url, props.id)
     }
 
     return(

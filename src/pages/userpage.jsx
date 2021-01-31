@@ -14,7 +14,10 @@ import UserForm from '../components/UserForm'
 import { assignTokens } from '../helpers/authHeader'
 
 //Services
-import { getUsers } from '../services/users'
+import { get } from '../services/backendapi'
+
+//URL
+const userUrl = process.env.REACT_APP_USER_URL
 
 const UserPage = () => {
     const [loggedIn, setloggedIn] = useState(false)
@@ -35,7 +38,7 @@ const UserPage = () => {
       useEffect(() => {
         if (tokens.access) {
           assignTokens(tokens)
-          getUsers()
+          get(userUrl)
             .then(users => setUsers(users))
         }
       }, [ tokens ])
@@ -60,6 +63,7 @@ const UserPage = () => {
                         {loggedIn && users
                             .map(user => 
                                 <Users key={user.id}
+                                    tokens={tokens}
                                     id={user.id}
                                     sam_account_name={user.sam_account_name}
                                     given_name={user.given_name}
@@ -67,11 +71,15 @@ const UserPage = () => {
                                     organizational_unit={user.organizational_unit ? user.organizational_unit.name : "None"}
                                     groups={user.groups ? user.groups.map(group => group.name) : "None"}
                                     domains={user.domains ? user.domains.map(domain => domain.domain) : "None"}
+                                    groupids={user.groups ? user.groups.map(group => group.id) : []}
+                                    url={userUrl}
                                     />
                             )}
                     </Col>
                     <Col>
-                        {loggedIn && <UserForm tokens={tokens}/>}
+                        {loggedIn && <UserForm tokens={tokens}
+                                                url={userUrl}
+                        />}
                     </Col>
                 </Row>
 

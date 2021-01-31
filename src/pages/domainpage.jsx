@@ -15,9 +15,12 @@ import { assignTokens } from '../helpers/authHeader'
 
 
 //Services
-import { getDomains } from '../services/domains'
+import { get } from '../services/backendapi'
 
-const DomainPage = (props) => {
+//URL
+const domainUrl = process.env.REACT_APP_DOMAIN_URL
+
+const DomainPage = () => {
 
     const [loggedIn, setloggedIn] = useState(false)
     const [tokens, setTokens] = useState({})
@@ -39,7 +42,7 @@ const DomainPage = (props) => {
       useEffect(() => {
         if (tokens.access) {
           assignTokens(tokens)
-          getDomains()
+          get(domainUrl)
             .then(domains => setDomains(domains))
         }
       }, [ tokens ])
@@ -71,10 +74,14 @@ const DomainPage = (props) => {
                                         distinguished_name={domain.distinguished_name}
                                         ipv4address={domain.ipv4address}
                                         acc_admin={domain.acc_admin}
-                                        key_name={domain.key_name}  
+                                        key_name={domain.key_name}
+                                        url={domainUrl}  
                                         />)}
                     </Col>
-                    <Col>{loggedIn && <DomainForm />}</Col>
+                    <Col>{loggedIn && <DomainForm 
+                                        url={domainUrl}
+                                        />}
+                    </Col>
                     </Row>
             </Container>
             

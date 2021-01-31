@@ -1,12 +1,12 @@
 import React from 'react'
-import { deleteGroup } from '../services/groups'
+import { destroy } from '../services/backendapi'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 
 const Groups = (props) => {
     const handleDelete = () => {
         console.log(props)
-        deleteGroup(props.id)
+        destroy(props.url, props.id)
     }
 
     return(

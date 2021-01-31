@@ -14,7 +14,10 @@ import OuForm from '../components/OuForm'
 import { assignTokens } from '../helpers/authHeader'
 
 //Services
-import { getOus } from '../services/ous'
+import { get } from '../services/backendapi'
+
+//URL
+const ouUrl = process.env.REACT_APP_OU_URL
 
 const OuPage = () => {
     const [loggedIn, setloggedIn] = useState(false)
@@ -34,7 +37,7 @@ const OuPage = () => {
       useEffect(() => {
         if (tokens.access) {
           assignTokens(tokens)
-          getOus()
+          get(ouUrl)
             .then(ous => setOus(ous))
         }
         console.log(ous)
@@ -61,10 +64,11 @@ const OuPage = () => {
                             .map(ou => 
                                 <Ous key={ou.id}
                                       id={ou.id}
-                                      name={ou.name} 
+                                      name={ou.name}
+                                      url={ouUrl} 
                                         />)}
                     </Col>
-                    <Col>{loggedIn && <OuForm />}</Col>
+                    <Col>{loggedIn && <OuForm url={ouUrl}/>}</Col>
                     </Row>
             </Container>
         </div>

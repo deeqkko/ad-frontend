@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteDomain } from '../services/domains'
+import { destroy } from '../services/backendapi'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
 
 const Domains = (props) => {
@@ -7,7 +7,7 @@ const Domains = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        deleteDomain(props.id)
+        destroy(props.url, props.id)
     }
 
     return(

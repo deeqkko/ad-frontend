@@ -1,12 +1,13 @@
 import React from 'react'
-import { deleteUser } from '../services/users'
+import { destroy } from '../services/backendapi'
 import { Container, Row, Button, ListGroup } from 'react-bootstrap'
+import UpdateForm from './UpdateForm'
 
 const Users = (props) => {
 
     const handleDelete = () => {
         console.log(props)
-        deleteUser(props.id)
+        destroy(props.url, props.id)
     }
 
     return(
@@ -22,6 +23,13 @@ const Users = (props) => {
                         <ListGroup.Item>Domains:{props.domains}</ListGroup.Item>
                         <ListGroup.Item>
                             <Button variant="danger" id="delete" onClick={handleDelete}>Delete</Button>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                        <UpdateForm tokens={props.tokens}
+                                    id = {props.id}
+                                    currentGroups = {props.groupids}
+                                    url={props.url}
+                         />
                         </ListGroup.Item>
                     </ListGroup>
                 </Row>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { createUser } from '../services/users'
+import { create } from '../services/backendapi'
 import { Container, Form, Button } from 'react-bootstrap'
 
-import { getOus } from '../services/ous'
-import { getGroups } from '../services/groups'
+import { get } from '../services/backendapi'
 import { assignTokens } from '../helpers/authHeader'
+
+const groupUrl = process.env.REACT_APP_GROUP_URL
+const ouUrl = process.env.REACT_APP_OU_URL
 
 const UserForm = (props) => {
 
@@ -48,15 +50,15 @@ const UserForm = (props) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await createUser(newUser)
+        const response = await create(props.url, newUser)
         console.log(response)
         setNewUser(newUserTemplate)
     }
 
     useEffect(() => {
         assignTokens(props.tokens)
-        getOus().then(ous => setOus(ous))
-        getGroups().then(groups => setGroups(groups))
+        get(ouUrl).then(ous => setOus(ous))
+        get(groupUrl).then(groups => setGroups(groups))
 
     }, [])
     

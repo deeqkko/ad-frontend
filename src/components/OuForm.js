@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { createOu } from '../services/ous'
+import { create } from '../services/backendapi'
 import { Container, Form, Button } from 'react-bootstrap'
 
-const OuForm = () => {
+const OuForm = (props) => {
 
     const newOuTemplate = {name: ''}
 
@@ -18,7 +18,7 @@ const OuForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await createOu(newOu)
+        const response = await create( props.url, newOu)
         console.log(response)
         setNewOu(newOuTemplate)
     }

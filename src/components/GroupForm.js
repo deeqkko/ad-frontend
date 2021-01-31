@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
-import { createGroup } from '../services/groups'
+import React, { useState, useEffect } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
+
+import { get, create } from '../services/backendapi'
+import { assignTokens } from '../helpers/authHeader'
+
+const ouUrl = process.env.REACT_APP_OU_URL
 
 const GroupForm = (props) => {
     
@@ -15,6 +19,7 @@ const GroupForm = (props) => {
     }
 
     const [ newGroup, setNewGroup ] = useState(newGroupTemplate)
+    const [ ous, setOus ] = useState([])
 
 
     const handleCreateEntryChange = (event) => {
@@ -27,10 +32,15 @@ const GroupForm = (props) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await createGroup(newGroup)
+        const response = await create(props.url, newGroup)
         console.log(response)
         setNewGroup(newGroupTemplate)
     }
+
+    useEffect(() => {
+        assignTokens(props.tokens)
+        get(ouUrl).then(ous => setOus(ous))
+    }, [])
 
     return(
         <div>
@@ -110,7 +120,9 @@ const GroupForm = (props) => {
                             value={newGroup.organizational_unit}
                             name='organizational_unit'
                             onChange={handleCreateEntryChange}>
-                            {props.ous ? props.ous.map(ou => <option>{ou.name}</option>) : "None"}
+                            <option id='none' value=''>None</option>
+                            {ous.map(ou => 
+                                <option key={ou.id} value={ou.id}>{ou.name}</option>)}
                             </Form.Control>
                     </Form.Group>
                     <Button variant='primary' id='submit' type='submit'>Create</Button>

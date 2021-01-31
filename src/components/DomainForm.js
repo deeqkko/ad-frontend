@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { createDomain } from '../services/domains'
+import { create } from '../services/backendapi'
 import { Container, Form, Button } from 'react-bootstrap'
 
-const DomainForm = () => {
+const DomainForm = (props) => {
 
     const newDomainTemplate = {
         domain:'',
@@ -24,7 +24,7 @@ const DomainForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
-        const response = await createDomain(newDomain)
+        const response = await create(props.url, newDomain)
         console.log(response)
         setNewDomain(newDomainTemplate)
     }
