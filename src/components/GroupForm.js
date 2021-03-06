@@ -11,8 +11,8 @@ const GroupForm = (props) => {
     const newGroupTemplate = {
         name:'',
         sam_account_name:'',
-        group_category:'',
-        group_scope:'',
+        group_category: 0,
+        group_scope: 0,
         display_name:'',
         description:'',
         organizational_unit:''
@@ -22,8 +22,24 @@ const GroupForm = (props) => {
     const [ ous, setOus ] = useState([])
 
 
+
     const handleCreateEntryChange = (event) => {
-        const value = event.target.value
+        var value = event.target.value
+        if (event.target.id === ("group_category" || "group_scope")) {
+            if (value === "Distribution" || "DomainLocal") {
+                value = parseInt(0)
+            }
+    
+            if (value === "Security" || "Global" ) {
+                value = parseInt(1)
+            }
+    
+            if (value === "Universal") {
+                value = parseInt(2)
+            }
+        }
+        
+
         setNewGroup({
             ...newGroup,
             [event.target.name]: value
@@ -74,9 +90,8 @@ const GroupForm = (props) => {
                             value={newGroup.group_category}
                             name='group_category' 
                             onChange={handleCreateEntryChange}>
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
+                            <option>Distribution</option>
+                            <option>Security</option>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -87,9 +102,9 @@ const GroupForm = (props) => {
                             value={newGroup.group_scope}
                             name='group_scope'
                             onChange={handleCreateEntryChange}>
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
+                            <option>DomainLocal</option>
+                            <option>Global</option>
+                            <option>Universal</option>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>

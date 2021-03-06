@@ -26,6 +26,29 @@ const GroupPage = () => {
     const [tokens, setTokens] = useState({})
     const [groups, setGroups] = useState([])
 
+    const convertCategory = category => {
+        if (category === 1 ) {
+            category = "Security"
+        } else {
+            category = "Distribution"
+        }
+        return category
+    }
+
+    const convertScope = scope => {
+        if (scope === 0) {
+            scope = "DomainLocal"
+        }
+        if (scope === 1) {
+            scope = "Global"
+        }
+        if (scope === 2) {
+            scope = "Universal"
+        }
+
+        return scope
+    }
+
 
     useEffect(() => {
         const loggedTokensJSON = window.localStorage.getItem('tokens')
@@ -45,6 +68,7 @@ const GroupPage = () => {
 
         }
       }, [ tokens ])
+
     
     return(
         <div>
@@ -69,8 +93,8 @@ const GroupPage = () => {
                                     id={group.id}
                                     name={group.name}
                                     sam_account_name={group.sam_account_name}
-                                    group_category={group.group_category}
-                                    group_scope={group.group_scope}
+                                    group_category={convertCategory(group.group_category)}
+                                    group_scope={convertScope(group.group_scope)}
                                     display_name={group.display_name}
                                     description={group.description}
                                     organizational_unit={
