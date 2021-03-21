@@ -40,6 +40,7 @@ const UserPage = () => {
           assignTokens(tokens)
           get(userUrl)
             .then(users => setUsers(users))
+            .catch(error => setUsers([]))
         }
       }, [ tokens ])
     

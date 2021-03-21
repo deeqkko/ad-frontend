@@ -7,8 +7,8 @@ export const assignTokens = (tokens) => {
         }
 
     refreshToken = {
-        body: { Refresh: tokens.refresh }
-    }   
+        body: { refresh: tokens.refresh }
+    }  
 }
 
 export const removeTokens = () => {
@@ -17,7 +17,7 @@ export const removeTokens = () => {
 }
 
 export const getAccessToken = () => {
-    console.log('From authHeader.js ',accessToken)
+    // console.log('From authHeader.js access ',accessToken)
     return(accessToken)
 }
 

@@ -65,6 +65,7 @@ const GroupPage = () => {
           assignTokens(tokens)
           get(groupUrl)
             .then(groups => setGroups(groups))
+            .catch(error => setGroups([]))
 
         }
       }, [ tokens ])

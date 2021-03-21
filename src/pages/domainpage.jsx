@@ -44,6 +44,7 @@ const DomainPage = () => {
           assignTokens(tokens)
           get(domainUrl)
             .then(domains => setDomains(domains))
+            .catch(error => setDomains([]))
         }
       }, [ tokens ])
     

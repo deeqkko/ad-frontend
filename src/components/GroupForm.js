@@ -24,22 +24,7 @@ const GroupForm = (props) => {
 
 
     const handleCreateEntryChange = (event) => {
-        var value = event.target.value
-        if (event.target.id === ("group_category" || "group_scope")) {
-            if (value === "Distribution" || "DomainLocal") {
-                value = parseInt(0)
-            }
-    
-            if (value === "Security" || "Global" ) {
-                value = parseInt(1)
-            }
-    
-            if (value === "Universal") {
-                value = parseInt(2)
-            }
-        }
-        
-
+        const value = event.target.value
         setNewGroup({
             ...newGroup,
             [event.target.name]: value
@@ -90,8 +75,8 @@ const GroupForm = (props) => {
                             value={newGroup.group_category}
                             name='group_category' 
                             onChange={handleCreateEntryChange}>
-                            <option>Distribution</option>
-                            <option>Security</option>
+                            <option value={parseInt(0)}>Distribution</option>
+                            <option value={parseInt(1)}>Security</option>     
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -102,9 +87,9 @@ const GroupForm = (props) => {
                             value={newGroup.group_scope}
                             name='group_scope'
                             onChange={handleCreateEntryChange}>
-                            <option>DomainLocal</option>
-                            <option>Global</option>
-                            <option>Universal</option>
+                            <option value={parseInt(0)}>DomainLocal</option>
+                            <option value={parseInt(1)}>Global</option>
+                            <option value={parseInt(2)}>Universal</option>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -140,7 +125,7 @@ const GroupForm = (props) => {
                                 <option key={ou.id} value={ou.id}>{ou.name}</option>)}
                             </Form.Control>
                     </Form.Group>
-                    <Button variant='primary' id='submit' type='submit'>Create</Button>
+                    <Button variant='primary' id='submit' type='submit' name='create'>Create</Button>
                 </Form>
             </Container>
         </div>

@@ -39,6 +39,7 @@ const OuPage = () => {
           assignTokens(tokens)
           get(ouUrl)
             .then(ous => setOus(ous))
+            .catch(error => setOus([]))
         }
         console.log(ous)
       }, [ tokens ])

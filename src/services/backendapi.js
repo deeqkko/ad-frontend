@@ -1,13 +1,27 @@
 import axios from 'axios'
-import { getAccessToken } from '../helpers/authHeader'
+import { getAccessToken, getRefreshToken } from '../helpers/authHeader'
+import createAuthRefreshInterceptor from 'axios-auth-refresh'
 
 let authorization = null
+let refresh = null
+
+const refreshUrl = 'http://localhost:8000/api/token/refresh/'
+
+
+// const refreshAuthLogic = (failedRequest) => {
+//     axios.post(refreshUrl, refresh.body).then(response => {
+//         console.log(response.data)
+//         failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access
+//         console.log(failedRequest.response.config.headers)
+//         return Promise.resolve()
+//     })}
 
 
 export const get = async (url) => {
     authorization = getAccessToken()
+    // refresh = getRefreshToken()
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic, { pauseInstanceWhileRefreshing: true })
     const response = await axios.get(url, authorization)
-    console.log(response)
     return response.data
 }
 

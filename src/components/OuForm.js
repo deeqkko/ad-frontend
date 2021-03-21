@@ -38,7 +38,7 @@ const OuForm = (props) => {
                             placeholder='Organizational unit name'
                         />
                     </Form.Group>
-                    <Button variant='primary' id='submit' type='submit'>Create</Button>
+                    <Button variant='primary' id='submit' type='submit' name='create'>Create</Button>
                 </Form>
             </Container>
         </div>
